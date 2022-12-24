@@ -1,23 +1,10 @@
-from PIL import Image
+from test import test_hiding_in_image
 
-from src.decode import getDataFromImage
-from src.encode import putDataInsideImage
+imgName = "data/image.png"
+imgSecretName = "out/imgWithSecret.png"
 
-imgName = "image.png"
-imgSecretName = "imgWithSecret.png"
-
-dataSecretName = "data.txt"
-dataRecoverName = "dataOut.txt"
-
-# knowing the order in which we save the bits is important when recovering the data from the image
-
-im = Image.open(imgName)
-with open(dataSecretName, "rb") as dataFile:  # Note that we open in binary mode
-    secretData = dataFile.read()
-putDataInsideImage(im, secretData)
-im.save(imgSecretName)
+dataSecretName = "data/data.txt"
+dataRecoverName = "out/dataOut.txt"
 
 
-imO = Image.open(imgSecretName)
-with open(dataRecoverName, "wb") as dataFile:  # Note that we open in binary mode
-    dataFile.write(getDataFromImage(im))
+test_hiding_in_image(imgName, imgSecretName, dataSecretName, dataRecoverName)
